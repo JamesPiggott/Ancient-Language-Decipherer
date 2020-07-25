@@ -20,3 +20,6 @@ This work does not have to be perfect, it is intended to be the best available p
 
 ## Literature
 - "Automatic egyptian hieroglyph recognition by retrieving images as texts", M Franken, JC van Gemert, Proceedings of the 21st ACM international conference on Multimedia, 765-768, 2013
+
+## Resources
+- https://machinelearningmastery.com/how-to-use-transfer-learning-when-developing-convolutional-neural-network-models/
