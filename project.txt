@@ -1,0 +1,12 @@
+name=PythonAncientLanguages
+dnn_type=cnn
+download_url=http://iamai.nl/downloads/GlyphDataset.zip
+data_set_name=
+epochs=10
+steps_per_epoch=0
+validation_steps=0
+loss_function=CategoricalCrossentropy
+optimizer=adam
+batch_size=64
+model_format=h5
+tf_lite_model=yes
