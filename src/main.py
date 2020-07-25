@@ -1,5 +1,5 @@
-from PythonAncientLanguages.src.cuneiform.train_cuneiform import TrainCuneiform
-from PythonAncientLanguages.src.heiroglyphics.train_hieroglyphics import TrainHieroglyphics
+from cuneiform.train_cuneiform import TrainCuneiform
+from heiroglyphics.train_hieroglyphics import TrainHieroglyphics
 
 
 class StartApplication:
@@ -12,11 +12,11 @@ class StartApplication:
             print("2. Hieroglyphics")
             print("0. To exit the program")
             choice = input()
-            if choice is '1':
+            if choice == '1':
                 self.cuneiform()
-            elif choice is '2':
+            elif choice == '2':
                 self.hieroglyphics()
-            elif choice is '0':
+            elif choice == '0':
                 break
             else:
                 print('Choice not recognized')
@@ -27,11 +27,11 @@ class StartApplication:
             print("Lets analyze Cuneiform")
             self.application_choice_menu()
             choice = input()
-            if choice is '1':
+            if choice == '1':
                 TrainCuneiform()
-            elif choice is '2':
+            elif choice == '2':
                 print()
-            elif choice is '0':
+            elif choice == '0':
                 break
             else:
                 print('Choice not recognized')
@@ -42,11 +42,12 @@ class StartApplication:
             print("Lets analyze Hieroglyphics")
             self.application_choice_menu()
             choice = input()
-            if choice is '1':
-                TrainHieroglyphics()
-            elif choice is '2':
+            if choice == '1':
+                hieroglyphics = TrainHieroglyphics()
+                hieroglyphics.load_model()
+            elif choice == '2':
                 print()
-            elif choice is '0':
+            elif choice == '0':
                 break
             else:
                 print('Choice not recognized')
