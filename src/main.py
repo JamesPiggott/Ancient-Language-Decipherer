@@ -44,7 +44,7 @@ class StartApplication:
             choice = input()
             if choice == '1':
                 hieroglyphics = TrainHieroglyphics()
-                hieroglyphics.load_model()
+                hieroglyphics.run_all()
             elif choice == '2':
                 print()
             elif choice == '0':
