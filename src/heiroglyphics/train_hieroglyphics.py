@@ -81,10 +81,10 @@ class TrainHieroglyphics:
 
 
         history = self.model.fit(train_generator, 
-                                    steps_per_epoch=100, 
+                                    # steps_per_epoch=100, 
                                     epochs=10,
                                     validation_data=validation_generator, 
-                                    validation_steps=50, 
+                                    # validation_steps=50, 
                                     verbose=2)
    
 
