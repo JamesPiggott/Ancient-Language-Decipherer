@@ -41,12 +41,14 @@ class TrainHieroglyphics:
     channels = 3
 
     def __init__(self):
+        print("Hello, world!")
         # self.number_of_classes = 2
         # self.train_dir = "../data/sample/train"
         # self.validation_dir   = "../data/sample/validation"
 
         # List data set
-        print(os.listdir("../input"))
+        print(os.listdir("input/"))
+        self.run_all()
 
 
     def run_all(self):
@@ -58,14 +60,14 @@ class TrainHieroglyphics:
         print("All done")
 
     def load_dataset(self):
-        train_dir = '../input/train'
-        test_dir = '../input/test'
+        train_dir = 'input/train'
+        test_dir = 'input/test'
 
         # train_imgs = ['../input/train/{}'.format(i) for i in os.listdir(train_dir)]  #get full data set
-        train_dogs = ['../input/train/{}'.format(i) for i in os.listdir(train_dir) if 'dog' in i]  #get dog images
-        train_cats = ['../input/train/{}'.format(i) for i in os.listdir(train_dir) if 'cat' in i]  #get cat images
+        train_dogs = ['input/train/{}'.format(i) for i in os.listdir(train_dir) if 'dog' in i]  #get dog images
+        train_cats = ['input/train/{}'.format(i) for i in os.listdir(train_dir) if 'cat' in i]  #get cat images
 
-        self.test_imgs = ['../input/test/{}'.format(i) for i in os.listdir(test_dir)] #get test images
+        self.test_imgs = ['input/test/{}'.format(i) for i in os.listdir(test_dir)] #get test images
 
         self.train_imgs = train_dogs[:2000] + train_cats[:2000]  # slice the dataset and use 2000 in each class
         random.shuffle(self.train_imgs)  # shuffle it randomly
