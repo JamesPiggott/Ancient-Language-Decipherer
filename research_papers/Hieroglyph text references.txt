@@ -1,7 +1,4 @@
-Franken, Morris & Gemert, Jan. (2013). Automatic Egyptian hieroglyph recognition by retrieving images as texts. MM 2013 - Proceedings of the 2013 ACM Multimedia Conference. 10.1145/2502081.2502199. 
-
-Domingo, Jaime & Herrera, Pedro & Valero, Enrique & Cerrada, Carlos. (2017). Deciphering Egyptian Hieroglyphs: Towards a New Strategy for Navigation in Museums. Sensors. 17. 589. 10.3390/s17030589. 
-
-Philipp Wiesenbach, & Stefan Riezler. (2019). Multi-Task Modeling of Phonographic Languages: Translating Middle Egyptian Hieroglyphs. Zenodo. http://doi.org/10.5281/zenodo.3524924
-
-Akshit Talwar. (2017). Script Identification with Ancient Egyptian Hieroglyphs. Dissertation University of St Andrews. http://akshittalwar.com/files/dissertation.pdf
+- Franken, Morris & Gemert, Jan. (2013). Automatic Egyptian hieroglyph recognition by retrieving images as texts. MM 2013 - Proceedings of the 2013 ACM Multimedia Conference. 10.1145/2502081.2502199. 
+- Domingo, Jaime & Herrera, Pedro & Valero, Enrique & Cerrada, Carlos. (2017). Deciphering Egyptian Hieroglyphs: Towards a New Strategy for Navigation in Museums. Sensors. 17. 589. 10.3390/s17030589. 
+- Philipp Wiesenbach, & Stefan Riezler. (2019). Multi-Task Modeling of Phonographic Languages: Translating Middle Egyptian Hieroglyphs. Zenodo. http://doi.org/10.5281/zenodo.3524924
+- Akshit Talwar. (2017). Script Identification with Ancient Egyptian Hieroglyphs. Dissertation University of St Andrews. http://akshittalwar.com/files/dissertation.pdf
