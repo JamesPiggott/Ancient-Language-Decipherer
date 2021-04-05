@@ -1,65 +1,54 @@
-from cuneiform.train_cuneiform import TrainCuneiform
-from heiroglyphics.train_hieroglyphics import TrainHieroglyphics
+from os.path import join, exists, dirname
+from urllib.request import urlopen
+from zipfile import ZipFile
+from io import BytesIO
+import os
+from os import listdir
+from os.path import isfile, join
+import shutil
 
 
 class StartApplication:
 
     def __init__(self):
+        file_dir = dirname(__file__)
+        self.dataPath = join(file_dir, "../data/glyphdataset/Dataset")
         while True:
-            print()
-            print("What do wish to analyze?")
-            print("1. Cuneiform")
-            print("2. Hieroglyphics")
-            print("0. To exit the program")
-            choice = input()
-            if choice == '1':
-                self.cuneiform()
-            elif choice == '2':
-                self.hieroglyphics()
-            elif choice == '0':
-                break
-            else:
-                print('Choice not recognized')
+            self.download_dataset()
 
-    def cuneiform(self):
-        while True:
-            print()
-            print("Lets analyze Cuneiform")
-            self.application_choice_menu()
-            choice = input()
-            if choice == '1':
-                TrainCuneiform()
-            elif choice == '2':
-                print()
-            elif choice == '0':
-                break
-            else:
-                print('Choice not recognized')
+    def download_dataset(self):
+        """
+        Download dataset from 'http://iamai.nl/downloads/GlyphDataset.zip' if zip file does not exist
+        """
+        if not exists(self.dataPath):
+            print("downloading dataset (57.5MB)")
+            url = urlopen("http://iamai.nl/downloads/GlyphDataset.zip")
+            with ZipFile(BytesIO(url.read())) as z:
+                z.extractall(join(self.dataPath, ".."))
 
-    def hieroglyphics(self):
-        while True:
-            print()
-            print("Lets analyze Hieroglyphics")
-            self.application_choice_menu()
-            choice = input()
-            if choice == '1':
-                hieroglyphics = TrainHieroglyphics()
-                hieroglyphics.run_all()
-            elif choice == '2':
-                print()
-            elif choice == '0':
-                break
-            else:
-                print('Choice not recognized')
+    def convert_dataset(self):
+        mypath = "test_data/"
 
-    def application_choice_menu(self):
-        print("What do you want to do?")
-        print("1. Train new model")
-        print("2. Perform inference on model")
-        print("0. To return to main menu?")
+        onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
+
+        print(onlyfiles)
+
+        for png in onlyfiles:
+
+            print(png)
+
+            folder_name = png[7:-4]
+
+            # check if folder name exists
+
+            if os.path.isdir('clean_data/' + folder_name) == False:
+                os.makedirs('clean_data/' + folder_name)
+
+            # copy image to suitable folder and rename
+            shutil.move(mypath + "/" + png, 'clean_data/' + folder_name + "/")
+
 
 if __name__ == "__main__":
-
     """
     Start the application
     """
