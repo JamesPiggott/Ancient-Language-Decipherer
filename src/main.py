@@ -20,7 +20,6 @@ class StartApplication:
     def __init__(self):
         file_dir = dirname(__file__)
         self.dataPath = join(file_dir, "../data/glyphdataset/Dataset")
-        self.download_dataset()
         self.stelePath = join(self.dataPath, "Manual/Preprocessed")
         self.intermediatePath = join(file_dir, "../intermediates")
         self.featurePath = join(self.intermediatePath, "features.npy")
@@ -29,6 +28,7 @@ class StartApplication:
         self.image_paths = []
         self.labels = []
         self.batch_size = 200
+        self.download_dataset()
         self.model_training()
 
     def download_dataset(self):
@@ -66,32 +66,32 @@ class StartApplication:
 
         # check if the feature file is present, if so; there is no need to recompute the features
         # The pre-computed features can also be downloaded from http://iamai.nl/downloads/features.npy
-        # if not isfile(self.featurePath):
-        print("indexing images...")
-        Steles = [join(self.stelePath, f) for f in listdir(self.stelePath) if isdir(join(self.stelePath, f))]
-        for stele in Steles:
-            imagePaths = [join(stele, f) for f in listdir(stele) if isfile(join(stele, f))]
-            for path in imagePaths:
-                self.image_paths.append(path)
-                self.labels.append(path[(path.rfind("_") + 1): path.rfind(".")])
+        if not isfile(self.featurePath):
+            print("indexing images...")
+            Steles = [join(self.stelePath, f) for f in listdir(self.stelePath) if isdir(join(self.stelePath, f))]
+            for stele in Steles:
+                imagePaths = [join(stele, f) for f in listdir(stele) if isfile(join(stele, f))]
+                for path in imagePaths:
+                    self.image_paths.append(path)
+                    self.labels.append(path[(path.rfind("_") + 1): path.rfind(".")])
 
-        featureExtractor = FeatureExtractor()
-        features = []
-        print("computing features...")
-        for idx, (batch_images, _) in enumerate(batchGenerator(self.image_paths, self.labels, self.batch_size)):
-            print("{}/{}".format((idx + 1) * self.batch_size, len(self.labels)))
-            features_ = featureExtractor.get_features(batch_images)
-            features.append(features_)
-        features = np.vstack(features)
+            featureExtractor = FeatureExtractor()
+            features = []
+            print("computing features...")
+            for idx, (batch_images, _) in enumerate(batchGenerator(self.image_paths, self.labels, self.batch_size)):
+                print("{}/{}".format((idx + 1) * self.batch_size, len(self.labels)))
+                features_ = featureExtractor.get_features(batch_images)
+                features.append(features_)
+            features = np.vstack(features)
 
-        labels = np.asarray(self.labels)
-        print("saving features...")
-        np.save(self.featurePath, features)
-        np.save(self.labelsPath, labels)
-        # else:
-        #     print("loading precomputed features and labels from {} and {}".format(self.featurePath, self.labelsPath))
-        #     features = np.load(self.featurePath)
-        #     labels = np.load(self.labelsPath)
+            labels = np.asarray(self.labels)
+            print("saving features...")
+            np.save(self.featurePath, features)
+            np.save(self.labelsPath, labels)
+        else:
+            print("loading precomputed features and labels from {} and {}".format(self.featurePath, self.labelsPath))
+            features = np.load(self.featurePath)
+            labels = np.load(self.labelsPath)
 
         # on to the SVM trainign phase
         tobeDeleted = np.nonzero(labels == "UNKNOWN")  # Remove the Unknown class from the database
