@@ -1,30 +1,16 @@
 # Source project @ https://www.tensorflow.org/tutorials/load_data/images
 
 import numpy as np
-import os
-import PIL
-import PIL.Image
+import matplotlib
+import matplotlib.pyplot as plt
+matplotlib.use('TkAgg')
 import tensorflow as tf
+from tensorflow.keras import layers
 import pathlib
-dataset_url = "https://storage.googleapis.com/download.tensorflow.org/example_images/flower_photos.tgz"
 
-#data_dir = tf.keras.utils.get_file(origin=dataset_url,
-#                                   fname='flower_photos',
-#s                                   untar=True)
-#data_dir = pathlib.Path(data_dir)
-#sprint("Location: " + str(data_dir))
-
-data_dir="/home/kane/Projects/PythonAncientLanguages/train_data"
-print("Location: " + str(data_dir))
+# Location of the hieroglyph dataset, each class divided into subfolders
+data_dir="../train_data"
 data_dir = pathlib.Path(data_dir)
-#image_count = len(list(data_dir.glob('*/*.png')))
-#print(image_count)
-
-#roses = list(data_dir.glob('roses/*'))
-#PIL.Image.open(str(roses[0]))
-
-#roses = list(data_dir.glob('roses/*'))
-#PIL.Image.open(str(roses[1]))
 
 batch_size = 32
 img_height = 75
@@ -46,39 +32,22 @@ val_ds = tf.keras.preprocessing.image_dataset_from_directory(
   image_size=(img_height, img_width),
   batch_size=batch_size)
 
-class_names = train_ds.class_names
-print(class_names)
-
-import matplotlib
-import matplotlib.pyplot as plt
-matplotlib.use('TkAgg')
-
-#plt.figure(figsize=(10, 10))
-#for images, labels in train_ds.take(1):
-#  for i in range(9):
-#    ax = plt.subplot(3, 3, i + 1)
-#    plt.imshow(images[i].numpy().astype("uint8"))
-#    plt.title(class_names[labels[i]])
-#    plt.axis("off")
-#    plt.show()
-
-from tensorflow.keras import layers
-
+# Normalize the images
 normalization_layer = tf.keras.layers.experimental.preprocessing.Rescaling(1./255)
-
 normalized_ds = train_ds.map(lambda x, y: (normalization_layer(x), y))
 image_batch, labels_batch = next(iter(normalized_ds))
 first_image = image_batch[0]
 # Notice the pixels values are now in `[0,1]`.
 print(np.min(first_image), np.max(first_image))
 
+# Set buffered prefetching to prevent I/O from blocking
 AUTOTUNE = tf.data.AUTOTUNE
-
 train_ds = train_ds.cache().prefetch(buffer_size=AUTOTUNE)
 val_ds = val_ds.cache().prefetch(buffer_size=AUTOTUNE)
 
 num_classes = 179
 
+# Define the model to be trained
 model = tf.keras.Sequential([
   layers.experimental.preprocessing.Rescaling(1./255),
   layers.Conv2D(32, 3, activation='relu'),
@@ -92,19 +61,20 @@ model = tf.keras.Sequential([
   layers.Dense(num_classes)
 ])
 
+# Set optimizer and loss function
 model.compile(
   optimizer='adam',
   loss=tf.losses.SparseCategoricalCrossentropy(from_logits=True),
   metrics=['accuracy'])
-  
+
+# Start training
 history = model.fit(
   train_ds,
   validation_data=val_ds,
   epochs=50
 )
 
-print(history.history.keys())
-
+# summarize history for accuracy
 plt.plot(history.history['accuracy'])
 plt.plot(history.history['val_accuracy'])
 plt.title('model accuracy')
@@ -112,6 +82,7 @@ plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
 plt.show()
+
 # summarize history for loss
 plt.plot(history.history['loss'])
 plt.plot(history.history['val_loss'])
@@ -121,4 +92,5 @@ plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
 plt.show()
 
-
+# Save the Keras model in SavedModel format
+model.save("hieroglyph_model")
