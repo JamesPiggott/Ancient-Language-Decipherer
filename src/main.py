@@ -31,15 +31,7 @@ class StartApplication:
         self.download_dataset()
         self.model_training()
 
-    def download_dataset(self):
-        """
-        Download dataset from 'http://iamai.nl/downloads/GlyphDataset.zip' if zip file does not exist
-        """
-        if not exists(self.dataPath):
-            print("downloading dataset (57.5MB)")
-            url = urlopen("http://iamai.nl/downloads/GlyphDataset.zip")
-            with ZipFile(BytesIO(url.read())) as z:
-                z.extractall(join(self.dataPath, ".."))
+
 
     # def convert_dataset(self):
     #     mypath = "test_data/"
