@@ -45,25 +45,32 @@ class TrainModel:
       """
       Reorganize the dataset so each glyph class is in its own folder
       """
-      print(self.manual)
+      if not exists(self.convertedDataPath):
+        os.mkdir(self.convertedDataPath)
+
       # First convert the manually annotated dataset
       alldirs = [f for f in listdir(self.manual) if isdir(join(self.manual, f))]
 
-# mypath = "test_copy_data/"
-#
-# alldirs = [f for f in listdir(mypath) if isdir(join(mypath, f))]
-#
+      # Iterate over subfolders containing glyphs associated with a Piankoff photograph
       for dirs in alldirs:
+        dir = self.manual + "/" + dirs
+        if os.path.isdir(dir) == True:
+          allfiles = [f for f in listdir(dir) if isfile(join(dir, f))]
 
-        if os.path.isdir(dirs) == True:
-
-          allfiles = [f for f in listdir(dirs) if isfile(join(dirs, f))]
-
+          # Iterate over glyph files
           for glyph in allfiles:
-            # shutil.move(mypath + dirs + "/" + glyph, "../")
 
-            print(glyph)
+            # Determine Gardiner designation
+            underscore_removed = glyph.split("_")
+            gardiner = underscore_removed[1].split(".")
+            glyph_location = dir + "/" + glyph
 
+            # Check if subfolder for Gardiner designation exist, if not it is created
+            if not exists(self.convertedDataPath + "/" + gardiner[0]):
+              os.mkdir(self.convertedDataPath + "/" + gardiner[0])
+
+            # Copy the PNG with glyph over to 'converteddataset/'
+            shutil.move(glyph_location, self.convertedDataPath + "/" + gardiner[0])
 
 # Location of the hieroglyph dataset, each class divided into subfolders
 # data_dir="../train_data"
