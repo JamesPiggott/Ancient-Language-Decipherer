@@ -1,56 +1,40 @@
-import numpy as np
-import matplotlib
-import matplotlib.pyplot as plt
-
-matplotlib.use('TkAgg')
 import tensorflow as tf
-from tensorflow.keras import layers
-import pathlib
 
-# Location of the hieroglyph dataset, each class divided into subfolders
-data_dir = "../train_data"
-data_dir = pathlib.Path(data_dir)
+model = tf.keras.models.load_model('hieroglyph_model')
 
-batch_size = 32
+# Check its architecture
+# model.summary()
+
+import numpy as np
+from keras.preprocessing import image
+
 img_height = 75
 img_width = 50
 
-train_ds = tf.keras.preprocessing.image_dataset_from_directory(
-    data_dir,
-    validation_split=0.2,
-    subset="training",
-    seed=123,
-    image_size=(img_height, img_width),
-    batch_size=batch_size)
+# img = image.load_img('../data/glyphdataset/Dataset/Automated/Preprocessed/3/030026_S29.png', target_size = (img_height, img_width))
+# img = image.load_img('../data/glyphdataset/Dataset/Automated/Preprocessed/3/030030_S29.png', target_size = (img_height, img_width))
+img = image.load_img('../data/glyphdataset/Dataset/Automated/Preprocessed/3/030446_S29.png', target_size = (img_height, img_width))
+# img = image.load_img('../data/glyphdataset/Dataset/Automated/Preprocessed/3/030024_E34.png', target_size = (img_height, img_width))
+# img = image.load_img('../data/glyphdataset/Dataset/Automated/Preprocessed/3/030147_E34.png', target_size = (img_height, img_width))
+# img = image.load_img('../data/glyphdataset/Dataset/Automated/Preprocessed/3/030443_E34.png', target_size = (img_height, img_width))
+img = image.img_to_array(img)
+img = np.expand_dims(img, axis = 0)
 
-val_ds = tf.keras.preprocessing.image_dataset_from_directory(
-    data_dir,
-    validation_split=0.2,
-    subset="validation",
-    seed=123,
-    image_size=(img_height, img_width),
-    batch_size=batch_size)
+gardiner = model.predict_classes(img)
 
-# Normalize the images
-normalization_layer = tf.keras.layers.experimental.preprocessing.Rescaling(1. / 255)
-normalized_ds = train_ds.map(lambda x, y: (normalization_layer(x), y))
-image_batch, labels_batch = next(iter(normalized_ds))
-first_image = image_batch[0]
-# Notice the pixels values are now in `[0,1]`.
-print(np.min(first_image), np.max(first_image))
+print(gardiner)
 
-# Set buffered prefetching to prevent I/O from blocking
-AUTOTUNE = tf.data.AUTOTUNE
-train_ds = train_ds.cache().prefetch(buffer_size=AUTOTUNE)
-val_ds = val_ds.cache().prefetch(buffer_size=AUTOTUNE)
+# for i in range(len(img)):
+# 	print("X=%s, Predicted=%s" % (img[i], gardiner[i]))
 
-num_classes = 179
+# Xnew = [[...], [...]]
+ynew = model.predict(img)
 
+# for i in range(len(img)):
+# 	print("X=%s, Predicted=%s" % (img[i], ynew[i]))
 
-img = image_batch[0]
+classes = np.argmax(ynew, axis = 1)
+print(classes)
 
-print(img)
+# print(ynew)
 
-img = (np.expand_dims(img,0))
-
-print(img.shape)
