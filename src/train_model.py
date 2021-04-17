@@ -34,8 +34,8 @@ class TrainModel:
         self.num_classes = 179
 
         # Run the training program
-        self.download_dataset()
-        self.convert_dataset()
+        #self.download_dataset()
+        #self.convert_dataset()
         self.load_dataset()
         self.normalize_images()
         self.normalize_images()

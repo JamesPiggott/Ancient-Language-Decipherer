@@ -1,1 +1,6 @@
 pillow
+pandas
+opencv-python
+matplotlib
+tensorflow
+keras

@@ -5,6 +5,16 @@ Just like many other projects this is not without precedent. I first became awar
 
 Since late 2017 there is also the Hieroglyphics Initiative from game publisher Ubisoft. This coincided with the release of their game Assassin's Creed Origins. Only recently did this initiative release a browser app (July 2020) called [Fabricius](https://artsexperiments.withgoogle.com/fabricius/en), in cooperation with Google. However, little of the project has been made public and neither is the dataset available. It is nonetheless useful for inspiration.
 
+## Quickstart
+Two scripts are currently 'mostly' done. The first allows manual feature extraction of images containing Hieroglyphs. The second trains a simple CNN-based model to recognize glyphs from the dataset collected by Morris Franken. Python3 is required as are the packages in requirements.txt
+```
+pip3 install -r requirements.txt
+
+python3 image_processin.py      # Feature extraction
+
+python3 train_model.py          # Model training
+```
+
 ## Project Goals
 - Create Deep Learning models for the detection and recognition of Egyptian Hieroglyphs 
 - Use a publicly available corpus for interpretation of such texts.
@@ -27,6 +37,15 @@ After performing a literature study (see list of references) as well as studying
  - Obtain a copy of "The Pyramid of Unas" by Alexandre Piankoff, published 1955 or 1969. This book I could use to complete the dataset collated by Morris Franken.
  - Obtain a copy of the Abydos King's list dataset.
  - Obtain a copy of "Image Based Hieroglyphic Character Recognition" by Elnabawy et al. 2018.
+
+## Dataset
+Finding annotated datasets on Ancient Egyptian Hieroglyphs is difficult. Besides the dataset assembled by Morris Franken there are no significant publicly available pools with which to train models. Nonetheless, belows is a list of small datasets. It remains to be seen if assembling them all together would improve training. Check the file public_datasets.md for details on these sources.
+ - [fayrose middle egyptian dataset](https://github.com/fayrose/MiddleEgyptianDictionaryWebsite)
+ - [F Gimbert Hieroglyphs dataset](https://github.com/fgimbert/Hieroglyphs/tree/master/hieroglyphs)
+ - [Google Arts Fabricius workbench dataset](https://github.com/googleartsculture/workbench/tree/main/src/assets/images)
+ - [Jsesh dataset](https://github.com/rosmord/jsesh)
+
+Note that the dataset from Google Arts is just one sample of each Hieroglyph. The dataset they collated for training, by asking people to trace over Hieroglyphs thus creating a set of some 50.000 in size, is still unavailable.
 
 ## References
 - Franken, Morris & Gemert, Jan. (2013). Automatic Egyptian hieroglyph recognition by retrieving images as texts. MM 2013 - Proceedings of the 2013 ACM Multimedia Conference. 10.1145/2502081.2502199. 
