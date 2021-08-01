@@ -10,7 +10,7 @@ Two scripts are currently 'mostly' done. The first allows manual feature extract
 ```
 pip3 install -r requirements.txt
 
-python3 image_processin.py      # Feature extraction
+python3 image_processing.py      # Feature extraction
 
 python3 train_model.py          # Model training
 ```
@@ -40,7 +40,7 @@ After performing a literature study (see list of references) as well as studying
 
 ## Dataset
 Finding annotated datasets on Ancient Egyptian Hieroglyphs is difficult. Besides the dataset assembled by Morris Franken there are no significant publicly available pools with which to train models. Nonetheless, belows is a list of small datasets. It remains to be seen if assembling them all together would improve training. Check the file public_datasets.md for details on these sources.
- - [fayrose middle egyptian dataset](https://github.com/fayrose/MiddleEgyptianDictionaryWebsite)
+ - [Fayrose middle egyptian dataset](https://github.com/fayrose/MiddleEgyptianDictionaryWebsite)
  - [F Gimbert Hieroglyphs dataset](https://github.com/fgimbert/Hieroglyphs/tree/master/hieroglyphs)
  - [Google Arts Fabricius workbench dataset](https://github.com/googleartsculture/workbench/tree/main/src/assets/images)
  - [Jsesh dataset](https://github.com/rosmord/jsesh)
