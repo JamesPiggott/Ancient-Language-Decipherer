@@ -1,6 +1,7 @@
 pillow
+numpy
 pandas
 opencv-python
+opencv-contrib-python
 matplotlib
 tensorflow
-keras

@@ -89,7 +89,6 @@ class ImageProcessing:
         Mouse callback function to mark and save the coordinates of where the user has clicked on the image.
         """
         if event == cv2.EVENT_LBUTTONDOWN:
-            print("Testing Left Mousebutton!")
             # Mark point where user has clicked.
             cv2.circle(self.drawing_img, (x, y), 4, (0, 0, 0), -1)
             # Save click point x,y coordinates as a tuple into a list.
@@ -197,8 +196,8 @@ class ImageProcessing:
         # http://www.kerrywong.com/2009/05/07/canny-edge-detection-auto-thresholding/
         # Create image histogram.
         histogram = cv2.calcHist([self.blurred_img], [0], None, [256], [0, 256])
-        plt.plot(histogram)
-        plt.show()
+        # plt.plot(histogram)
+        # plt.show()
         # Find the pixel value (x-axis of histogram) associated with the median count value. Convert histogram ndarray to a
         # list and create a list for the histogram bins which represent pixel values 0-255.
         counts = [count for [count] in histogram]
@@ -239,14 +238,14 @@ class ImageProcessing:
         """
         cv2.namedWindow("Hough")
         # Create trackbars that can be used to adjust Hough transform parameters.
-        cv2.createTrackbar("min_line_length", "Hough", 150, 300, self.custom_on_change)
-        cv2.createTrackbar("max_line_gap", "Hough", 150, 300, self.custom_on_change)
-        cv2.createTrackbar("threshold", "Hough", 150, 300, self.custom_on_change)
+        cv2.createTrackbar("min_line_length", "Hough", 150, 300, lambda x:x)
+        cv2.createTrackbar("max_line_gap", "Hough", 150, 300, lambda x:x)
+        cv2.createTrackbar("threshold", "Hough", 150, 300, lambda x:x)
         # Create a copy of the scaled image onto which the Hough lines will be drawn.
-        # self.hough_lines_img = self.scaled_img.copy()
-        # cv2.imshow("Final Hough", self.hough_lines_img)
-        # cv2.waitKey(0)
-        # cv2.destroyAllWindows()
+        self.hough_lines_img = self.scaled_img.copy()
+        cv2.imshow("Final Hough", self.hough_lines_img)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
 
         while True:
             # Wait 10ms for the ESC key (ASCII code 27) to be pressed. If pressed break out of loop.
