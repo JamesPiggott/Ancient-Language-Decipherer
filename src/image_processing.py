@@ -241,13 +241,11 @@ class ImageProcessing:
         cv2.createTrackbar("min_line_length", "Hough", 150, 300, lambda x:x)
         cv2.createTrackbar("max_line_gap", "Hough", 150, 300, lambda x:x)
         cv2.createTrackbar("threshold", "Hough", 150, 300, lambda x:x)
-        # Create a copy of the scaled image onto which the Hough lines will be drawn.
-        self.hough_lines_img = self.scaled_img.copy()
-        cv2.imshow("Final Hough", self.hough_lines_img)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
 
         while True:
+            # Create a copy of the scaled image onto which the Hough lines will be drawn.
+            # self.hough_lines_img = self.scaled_img.copy()
+            # cv2.imshow("Hough", self.hough_lines_img)
             # Wait 10ms for the ESC key (ASCII code 27) to be pressed. If pressed break out of loop.
             key_pressed = cv2.waitKey(10) & 0xFF
             if key_pressed == 27:
@@ -263,6 +261,9 @@ class ImageProcessing:
             # computationally intensive). May then be possible to isolate these regions of interest.
             lines = cv2.HoughLinesP(self.thresh2_img, rho=1, theta=np.pi/180, threshold=threshold, minLineLength=min_line_length,
                                     maxLineGap=max_line_gap)
+
+            # lines = cv2.HoughLinesP(self.thresh2_img, rho=1, theta=np.pi/180, threshold=150, minLineLength=150,
+            #                         maxLineGap=150)
 
             # Plot only the horizontal and vertical Hough lines (if there are any) on a copy of the scaled colour image. With
             # each loop, the Hough lines image is reset to a clean scaled image with no lines on it before plotting again.
@@ -281,7 +282,7 @@ class ImageProcessing:
             cv2.imshow("Hough", self.hough_lines_img)
 
         # Show final Hough lines image.
-        cv2.imshow("Final Hough", self.hough_lines_img)
+        # cv2.imshow("Final Hough", self.hough_lines_img)
 
         # Wait for keypress then destroy all open windows.
         cv2.waitKey(0)
